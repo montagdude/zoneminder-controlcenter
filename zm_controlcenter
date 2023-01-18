@@ -9,18 +9,32 @@ if __name__ == "__main__":
     # Command line arguments
     parser = argparse.ArgumentParser(prog="zm_controlcenter",
                                      description="Text user interface to control ZoneMinder")
-    parser.add_argument("server", help="ZoneMinder server address (e.g., http://lan_ip_address")
-    parser.add_argument("username", help="ZoneMinder username")
-    parser.add_argument("password", help="ZoneMinder password")
-    parser.add_argument("pin", help="User PIN entry required to change run state")
+    parser.add_argument("server", help="ZoneMinder server address (e.g., http://lan_ip_address)")
+    parser.add_argument("--username", help="ZoneMinder username")
+    parser.add_argument("--password", help="ZoneMinder password")
+    parser.add_argument("--pin", help="User PIN entry required to change run state")
     args = parser.parse_args()
 
+    # Get required information
+    if args.username is not None:
+        username = args.username
+    else:
+        username = input("Enter ZoneMinder username: ")
+    if args.password is not None:
+        password = args.password
+    else:
+        password = input("Enter ZoneMinder password: ")
+    if args.pin is not None:
+        pin = args.pin
+    else:
+        pin = input("Select a PIN: ")
+
     # Initialize API
-    zmapi = ZMAPI(args.server, args.username, args.password)
+    zmapi = ZMAPI(args.server, username, password)
 
     # Display user interface
     if zmapi.login():
-        console = CC_Console(zmapi, args.pin)
+        console = CC_Console(zmapi, pin)
         console.execute()
         console.dialog.cleanup()
     else:
