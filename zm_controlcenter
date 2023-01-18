@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+from zm_api import ZMAPI
+from controlcenter_console import CC_Console
+
+if __name__ == "__main__":
+    # Command line arguments
+    parser = argparse.ArgumentParser(prog="zm_controlcenter",
+                                     description="Text user interface to control ZoneMinder")
+    parser.add_argument("server", help="ZoneMinder server address (e.g., http://lan_ip_address")
+    parser.add_argument("username", help="ZoneMinder username")
+    parser.add_argument("password", help="ZoneMinder password")
+    parser.add_argument("pin", help="User PIN entry required to change run state")
+    args = parser.parse_args()
+
+    # Initialize API
+    zmapi = ZMAPI(args.server, args.username, args.password)
+
+    # Display user interface
+    if zmapi.login():
+        console = CC_Console(zmapi, args.pin)
+        console.execute()
+        console.dialog.cleanup()
+    else:
+        sys.exit(1)
