@@ -28,7 +28,9 @@ class CC_Console:
                     response = self.pinEntryDialog()
                     if response == self.pin:
                         self.dialog.writeMessage("Please wait...")
-                        check = self.zmapi.changeRunState(runstates[stateidx]["name"])
+                        if not self.zmapi.changeRunState(runstates[stateidx]["name"]):
+                            self.dialog.writeMessage("Changing run state failed.")
+                            time.sleep(2)
                     else:
                         self.dialog.writeMessage("Incorrect PIN!")
                         time.sleep(self.incorrect_pin_timeout)
