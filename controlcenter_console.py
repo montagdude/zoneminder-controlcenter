@@ -46,7 +46,10 @@ class CC_Console:
         runstates, active = self.getRunStates()
         running = self.zmapi.getDaemonStatus()
         if running:
-            statusline = "ZoneMinder is running in {:s} mode.".format(active)
+            if active is not None:
+                statusline = "ZoneMinder is running in {:s} mode.".format(active)
+            else:
+                statusline = "Error determining current run state."
         else:
             statusline = "ZoneMinder is stopped."
         runstatelines = ["Available run states:"]
