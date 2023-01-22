@@ -20,3 +20,4 @@ It is recommended not to store your ZoneMinder password or the zoneminder-contro
 ## Screenshots and images
 ![alt tag](https://raw.githubusercontent.com/montagdude/zoneminder-controlcenter/master/images/screenshot-1.jpg)
 ![alt tag](https://raw.githubusercontent.com/montagdude/zoneminder-controlcenter/master/images/screenshot-2.jpg)
+![alt tag](https://raw.githubusercontent.com/montagdude/zoneminder-controlcenter/master/images/DSC_3583.jpg)
