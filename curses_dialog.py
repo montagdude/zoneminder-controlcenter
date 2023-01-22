@@ -217,5 +217,7 @@ class Dialog:
     def writeMessage(self, message):
         '''Clears the window and writes a simple message.'''
         self.win.clear()
-        self.win.addstr(0,0, message)
+        y = round(self.rows/2.)
+        x = round(self.cols/2. - len(message)/2.)
+        self.win.addstr(y,x, message)
         self.win.refresh()
