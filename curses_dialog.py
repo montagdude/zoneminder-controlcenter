@@ -74,6 +74,7 @@ class Dialog:
 
     def draw(self, title, lines, prompt, bottom_prompt=True):
         '''Redraws the dialog'''
+        curses.curs_set(1)
         prevx = self.x
         wsize = self.win.getmaxyx()
         self.rows = wsize[0]
@@ -217,6 +218,7 @@ class Dialog:
     def writeMessage(self, message):
         '''Clears the window and writes a simple message.'''
         self.win.clear()
+        curses.curs_set(0)
         y = round(self.rows/2.)
         x = round(self.cols/2. - len(message)/2.)
         self.win.addstr(y,x, message)
