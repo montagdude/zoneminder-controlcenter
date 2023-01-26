@@ -1,4 +1,5 @@
 import curses_dialog
+import jokes
 import time
 
 class CC_Console:
@@ -16,6 +17,7 @@ class CC_Console:
         timeout = min(max(50, timeout), 250)
         self.incorrect_pin_timeout = incorrect_pin_timeout
         self.dialog = curses_dialog.Dialog(timeout)
+        self.joke = {"setup": None, "punch": None}
 
     def execute(self):
         '''Main control loop'''
@@ -24,15 +26,20 @@ class CC_Console:
             runstates, response = self.stateDialog()
             try:
                 stateidx = int(response)-1
-                if stateidx in range(0, len(runstates)):
+                if stateidx == len(runstates)-1:
+                    # This one is a joke
+                    self.dialog.writeMessage(self.joke["punch"])
+                    time.sleep(2)
+                    continue
+                elif stateidx in range(0, len(runstates)-1):
                     response = self.pinEntryDialog()
                     if response == self.pin:
-                        self.dialog.writeMessage("Please wait...")
+                        self.dialog.writeMessage(jokes.funny_message())
                         if not self.zmapi.changeRunState(runstates[stateidx]["name"]):
                             self.dialog.writeMessage("Changing run state failed.")
                             time.sleep(2)
                     else:
-                        self.dialog.writeMessage("Incorrect PIN!")
+                        self.dialog.writeMessage(jokes.funny_error_message())
                         time.sleep(self.incorrect_pin_timeout)
             except ValueError:
                 pass
@@ -69,6 +76,12 @@ class CC_Console:
         # Get runstates and append a 'stop' state since this isn't provided by the API
         runstates = self.zmapi.getRunStates()
         runstates.append({"id": -1, "name": "stop", "active": False})
+
+        # Also append a random joke
+        self.joke["setup"], self.joke["punch"] = jokes.joke()
+        runstates.append({"id": -2, "name": self.joke["setup"], "active": False})
+
+        # Get active state
         active = None
         for runstate in runstates:
             if runstate["active"]:
