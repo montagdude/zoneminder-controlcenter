@@ -9,7 +9,7 @@ def sigint_handler(sig, frame):
     pass
 
 class Dialog:
-    def __init__(self, timeout=None):
+    def __init__(self, timeout=None, use_color=False):
         '''Displays an input dialog with curses and returns the result. Parameters:
            timeout: half-delay timeout, in tenths of a second. Use None for no timeout.
               Returns the string DIALOG_TIMEOUT when timeout occurs.'''
@@ -28,6 +28,13 @@ class Dialog:
         if timeout is not None:
             curses.halfdelay(min(timeout,255))
         self.win.keypad(True)
+
+        # Color. This is disabled by default, but if you want to use colors, just set
+        # use_color = True and adjust the settings as desired
+        self.use_color = use_color
+        if self.use_color:
+            curses.start_color()
+            curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
 
         # Drawing position
         self.y = 0
@@ -74,11 +81,16 @@ class Dialog:
 
     def draw(self, title, lines, prompt, bottom_prompt=True):
         '''Redraws the dialog'''
+        curses.curs_set(1)
         prevx = self.x
         wsize = self.win.getmaxyx()
         self.rows = wsize[0]
         self.cols = wsize[1]
         self.win.clear()
+
+        # Set colors
+        if self.use_color:
+            self.win.bkgd(curses.color_pair(1))
 
         # Draw window border
         self.win.border()
@@ -217,6 +229,7 @@ class Dialog:
     def writeMessage(self, message):
         '''Clears the window and writes a simple message.'''
         self.win.clear()
+        curses.curs_set(0)
         y = round(self.rows/2.)
         x = round(self.cols/2. - len(message)/2.)
         self.win.addstr(y,x, message)
