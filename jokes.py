@@ -22,7 +22,13 @@ jokes = {"Why do birds fly south in the winter?":
          "Fact: bears eat beets.":
              "Bears. Beets. Battlestar Galactica.",
          "Why did the student go to GA Tech?":
-             "To get a valuable degree in a STEM field."}
+             "To get a valuable degree in a STEM field.",
+         "Why did the elephant fall out of a tree?":
+             "The hippopotamus pushed him out."
+         "Why do ducks have webbed feet?":
+             "To stamp out forest fires.",
+         "Why do elephants have flat feet?":
+             "To stamp out flaming ducks."}
 
 # Funny messages
 messages = ["Asking Steve Jobs for permission...",
@@ -44,7 +50,8 @@ errmsgs = ["Incorrect PIN! Notifying the authorities...",
            "Poop.",
            "Try again after coffee.",
            "No way!",
-           "Try asking nicely next time."]
+           "Try asking nicely next time.",
+           "Incorrect PIN! Initiating self-destruct sequence..."]
 
 def joke():
     setup = random.choice(list(jokes.keys()))
