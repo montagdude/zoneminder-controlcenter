@@ -28,7 +28,10 @@ jokes = {"Why do birds fly south in the winter?":
          "Why do ducks have webbed feet?":
              "To stamp out forest fires.",
          "Why do elephants have flat feet?":
-             "To stamp out flaming ducks."}
+             "To stamp out flaming ducks.",
+         "Why did the poop cross the road?":
+            "It wanted to get squashed across the road.",
+         "phoebe": "Ticky-toe."}
 
 # Funny messages
 messages = ["Asking Steve Jobs for permission...",
