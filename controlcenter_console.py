@@ -52,10 +52,15 @@ class CC_Console:
                 statusline = "Error determining current run state."
         else:
             statusline = "ZoneMinder is stopped."
+
+        recent_events = self.zmapi.recentEvents()
+        eventsline = "Recent events: {:d} last hour, {:d} last day, {:d} last week" \
+                     .format(recent_events['hour'], recent_events['day'], recent_events['week'])
+
         runstatelines = ["Available run states:"]
         for i, runstate in enumerate(runstates):
             runstatelines.append("{:d}: {:s}".format(i+1, runstate["name"]))
-        lines = [statusline, ""] + runstatelines
+        lines = [statusline, eventsline, ""] + runstatelines
 
         prompt = "Enter new run state (1-{:d}):".format(len(runstates))
 

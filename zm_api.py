@@ -175,3 +175,18 @@ class ZMAPI:
         stateurl = self.apipath + "/states/change/{:s}.json".format(runstate_name)
         r = self._makeRequest(stateurl, method="post")
         return r.ok
+
+    def recentEvents(self):
+        '''Returns the number of events in the last hour, day, and week'''
+        recent_events = {"hour": 0, "day": 0, "week": 0}
+
+        for period in recent_events:
+            eventsurl = self.apipath + "/events/consoleEvents/1%20{:s}.json".format(period)
+            r = self._makeRequest(eventsurl)
+            if not r.ok:
+                self.debug(1, "Error getting events in last {:s}".format(period), "stderr")
+                continue
+            rj = r.json()
+            for monitor, num in rj['results'].items():
+                recent_events[period] += num
+        return recent_events
