@@ -176,7 +176,7 @@ class ZMAPI:
         r = self._makeRequest(stateurl, method="post")
         return r.ok
 
-    def recentEvents(self):
+    def recentEvents(self, exclude_monitors=[]):
         '''Returns the number of events in the last hour, day, and week'''
         recent_events = {"hour": 0, "day": 0, "week": 0}
 
@@ -188,5 +188,6 @@ class ZMAPI:
                 continue
             rj = r.json()
             for monitor, num in rj['results'].items():
-                recent_events[period] += num
+                if monitor not in exclude_monitors:
+                    recent_events[period] += num
         return recent_events
