@@ -61,7 +61,7 @@ class CC_Console:
             statusline = "ZoneMinder is stopped."
 
         recent_events = self.zmapi.recentEvents()
-        eventsline = "Recent events: {:d} last hour, {:d} last day, {:d} last week" \
+        eventsline = "{:d} events last hour, {:d} last day, {:d} last week" \
                      .format(recent_events['hour'], recent_events['day'], recent_events['week'])
 
         runstatelines = ["Available run states:"]
