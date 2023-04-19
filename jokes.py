@@ -24,7 +24,7 @@ jokes = {"Why do birds fly south in the winter?":
          "Why did the student go to GA Tech?":
              "To get a valuable degree in a STEM field.",
          "Why did the elephant fall out of a tree?":
-             "The hippopotamus pushed him out."
+             "The hippopotamus pushed him out.",
          "Why do ducks have webbed feet?":
              "To stamp out forest fires.",
          "Why do elephants have flat feet?":
