@@ -187,7 +187,10 @@ class ZMAPI:
                 self.debug(1, "Error getting events in last {:s}".format(period), "stderr")
                 continue
             rj = r.json()
-            for monitor, num in rj['results'].items():
-                if monitor not in exclude_monitors:
-                    recent_events[period] += num
+            try:
+                for monitor, num in rj['results'].items():
+                    if monitor not in exclude_monitors:
+                        recent_events[period] += num
+            except AttributeError:
+                self.debug(1, "Unexpected events data encountered.")
         return recent_events
